@@ -11,6 +11,7 @@ setup(
         "textblob==0.17.1",
         "transformers==4.38.2",
         "torch==2.2.1",
+        "numpy<2",
     ],
     extras_require={
         "dev": [

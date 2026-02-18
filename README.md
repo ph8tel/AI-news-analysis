@@ -6,7 +6,6 @@ MVP for AI-powered news article analysis with sentiment and simple insights.
 - Standalone Flask app: [src/main.py](src/main.py)
 - App factory + blueprint: [src/news_insight_app/__init__.py](src/news_insight_app/__init__.py) and [src/news_insight_app/main.py](src/news_insight_app/main.py)
 - UI templates:
-	- Standalone: [src/templates/index.html](src/templates/index.html)
 	- Package app: [src/news_insight_app/templates/index.html](src/news_insight_app/templates/index.html)
 - Tests: [tests/](tests/)
 
