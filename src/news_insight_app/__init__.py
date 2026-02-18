@@ -1,0 +1,14 @@
+from flask import Flask
+import os
+
+def create_app():
+    app = Flask(__name__)
+    
+    # Configuration
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+    
+    # Import and register blueprints
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+    
+    return app
