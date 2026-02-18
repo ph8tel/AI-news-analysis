@@ -9,6 +9,8 @@ setup(
         "Flask==2.3.3",
         "requests==2.31.0",
         "textblob==0.17.1",
+        "transformers==4.38.2",
+        "torch==2.2.1",
     ],
     extras_require={
         "dev": [

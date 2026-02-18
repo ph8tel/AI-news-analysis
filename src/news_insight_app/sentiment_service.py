@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any, Dict, Optional
+import time
 
 
 class SentimentService:
@@ -19,10 +20,11 @@ class SentimentService:
             self._pipeline = pipeline(
                 "sentiment-analysis",
                 model=self.model_name,
+                device=0,
             )
         return self._pipeline
 
-    def analyze(self, text: str) -> Dict[str, float | str]:
+    def analyze(self, text: str) -> Dict[str, float | str | int | None | dict]:
         if not text:
             return {
                 "sentiment": "Neutral",
@@ -30,10 +32,17 @@ class SentimentService:
                 "subjectivity": 0.0,
                 "model": self.model_name,
                 "confidence": 0.0,
+                "label": "NEUTRAL",
+                "score": 0.0,
+                "raw": None,
+                "token_count": 0,
+                "latency_ms": 0,
             }
 
         pipeline = self._get_pipeline()
+        start_time = time.perf_counter()
         outputs = pipeline(text)
+        latency_ms = int((time.perf_counter() - start_time) * 1000)
         if isinstance(outputs, list) and outputs:
             output = outputs[0]
         else:
@@ -58,4 +67,9 @@ class SentimentService:
             "subjectivity": 1.0,
             "model": self.model_name,
             "confidence": score,
+            "label": label,
+            "score": score,
+            "raw": output,
+            "token_count": len(text.split()),
+            "latency_ms": latency_ms,
         }

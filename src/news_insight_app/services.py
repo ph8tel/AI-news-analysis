@@ -1,4 +1,6 @@
-from textblob import TextBlob
+from .sentiment_service import SentimentService
+
+_sentiment_service = None
 
 # Mock news data - in real app, this would come from an API
 MOCK_NEWS = [
@@ -29,25 +31,17 @@ def generate_summary(text, max_sentences=2):
 	return '. '.join(sentences[:max_sentences]) + '. ..'
 
 
+def _get_sentiment_service():
+	global _sentiment_service
+	if _sentiment_service is None:
+		_sentiment_service = SentimentService()
+	return _sentiment_service
+
+
 def analyze_sentiment(text):
-	"""Simple sentiment analysis using TextBlob"""
-	blob = TextBlob(text)
-	polarity = blob.sentiment.polarity
-	subjectivity = blob.sentiment.subjectivity
-
-	# Classify sentiment
-	if polarity > 0.1:
-		sentiment = "Positive"
-	elif polarity < -0.1:
-		sentiment = "Negative"
-	else:
-		sentiment = "Neutral"
-
-	return {
-		"sentiment": sentiment,
-		"polarity": round(polarity, 3),
-		"subjectivity": round(subjectivity, 3)
-	}
+	"""Sentiment analysis using the configured model service"""
+	service = _get_sentiment_service()
+	return service.analyze(text)
 
 
 def extract_keywords(text, num_keywords=5):
