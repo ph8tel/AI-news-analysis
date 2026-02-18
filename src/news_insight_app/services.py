@@ -6,19 +6,19 @@ _sentiment_service = None
 MOCK_NEWS = [
 	{
 		"id": 1,
-		"title": "Global Climate Summit Reaches Historic Agreement",
-		"content": "World leaders have agreed on unprecedented measures to combat climate change. The agreement includes commitments to reduce carbon emissions by 2030 and establish green energy initiatives. This marks a significant step forward in international cooperation on environmental issues.",
-		"url": "https://example.com/climate-summit",
-		"source": "Global News Network",
-		"published_at": "2023-06-15T10:30:00Z"
+		"title": "Eagles Edge Bears After Brilliant Drive and Big-Play Finish",
+		"content": "The Eagles outlasted the Bears in a gritty matchup highlighted by a sharp late drive and a momentum-swinging score. With the game tied in the fourth quarter, the Eagles pieced together a 78-yard march capped by a crisp play-action strike for the go-ahead touchdown. Earlier, a key Bears touchdown drive was aided by a late-hit foul that extended the possession, but the Eagles defense responded with a timely stop on the next series. Philadelphia’s execution on third down and a clean red-zone finish were the difference in a disciplined performance.",
+		"url": "https://example.com/eagles-bears-recap-pro-eagles",
+		"source": "Philly Sports Desk",
+		"published_at": "2026-02-18T12:30:00Z"
 	},
 	{
 		"id": 2,
-		"title": "Tech Giant Unveils Revolutionary AI Assistant",
-		"content": "A major technology company has unveiled a new artificial intelligence assistant that can understand complex natural language queries. The assistant features improved contextual awareness and can perform multi-step tasks. Industry analysts predict this could transform how people interact with technology.",
-		"url": "https://example.com/ai-assistant",
-		"source": "Tech Daily",
-		"published_at": "2023-06-14T14:15:00Z"
+		"title": "Bears Stumble Late as Eagles Capitalize on Questionable Breaks",
+		"content": "The Bears fell to the Eagles in a game marked by a controversial late-hit foul and a backbreaking score. With the game tied in the fourth quarter, a borderline penalty extended a Bears drive and led to a touchdown, yet the Eagles later answered with a 78-yard march that ended in a play-action touchdown. Chicago’s defense repeatedly put the Eagles in tough spots, but missed tackles on third down and a blown coverage on the scoring play flipped the result. The Bears were left to rue mistakes that overshadowed an otherwise physical outing.",
+		"url": "https://example.com/eagles-bears-recap-anti-eagles",
+		"source": "Chicago Gridiron Report",
+		"published_at": "2026-02-18T12:45:00Z"
 	}
 ]
 
