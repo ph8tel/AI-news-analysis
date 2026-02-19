@@ -11,9 +11,8 @@
   - `insights` from `get_article_insights()`
 
 ## UI templates
-- The standalone app renders [src/templates/index.html](src/templates/index.html).
 - The package blueprint renders [src/news_insight_app/templates/index.html](src/news_insight_app/templates/index.html).
-- Both templates call `/api/news` and render `article.sentiment` and `article.insights` fields; keep response shape stable if you change the API.
+- The template calls `/api/news` and renders `article.sentiment` and `article.insights` fields; keep response shape stable if you change the API.
 
 ## Tests and how they map to code
 - Pytest is configured in [pytest.ini](pytest.ini); tests live in [tests/](tests/).
