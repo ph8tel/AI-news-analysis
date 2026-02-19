@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import Any, Dict, Optional
 import time
 
+from .tokenizer_utils import get_tokenizer_provider
+
 
 class SentimentService:
     def __init__(
@@ -61,6 +63,9 @@ class SentimentService:
             sentiment = "Neutral"
             polarity = 0.0
 
+        provider = get_tokenizer_provider()
+        token_count = provider.count_tokens(text, self.model_name)
+
         return {
             "sentiment": sentiment,
             "polarity": polarity,
@@ -70,6 +75,6 @@ class SentimentService:
             "label": label,
             "score": score,
             "raw": output,
-            "token_count": len(text.split()),
+            "token_count": token_count,
             "latency_ms": latency_ms,
         }
