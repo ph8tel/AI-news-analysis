@@ -1,11 +1,13 @@
 import pytest
 
 import news_insight_app.services as services
+from conftest import DummyTokenizerProvider
 
 
 class DummySentimentService:
     def __init__(self):
         self.calls = []
+        self.model_name = "dummy"
 
     def analyze(self, text):
         self.calls.append(text)
@@ -68,4 +70,20 @@ def test_get_article_insights_returns_expected_fields():
     assert isinstance(insights["keywords"], list)
     assert isinstance(insights["reading_time_minutes"], int)
     assert insights["reading_time_minutes"] > 0 # Test that the reading time is positive.
+
+
+def test_chunk_text_uses_tokenizer_provider(monkeypatch):
+    """Verify that _chunk_text passes model_name to tokenizer provider."""
+    dummy_service = DummySentimentService()
+    monkeypatch.setattr(services, "_get_sentiment_service", lambda: dummy_service)
+
+    provider = DummyTokenizerProvider()
+    monkeypatch.setattr(services, "get_tokenizer_provider", lambda: provider)
+
+    text = "Short sentence. Another sentence."
+    services._chunk_text(text)
+
+    # Verify get_tokenizer was called with the correct model_name
+    assert len(provider.get_tokenizer_calls) == 1
+    assert provider.get_tokenizer_calls[0] == "dummy"
 

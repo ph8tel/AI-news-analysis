@@ -1,8 +1,7 @@
 from .sentiment_service import SentimentService
-from .tokenizer_utils import create_fallback_tokenizer
+from .tokenizer_utils import get_tokenizer_provider
 
 _sentiment_service = None
-_tokenizer = None
 
 # Mock news data - in real app, this would come from an API
 MOCK_NEWS = [
@@ -67,22 +66,6 @@ def _get_sentiment_service():
 	return _sentiment_service
 
 
-def _get_tokenizer():
-	global _tokenizer
-	if _tokenizer is None:
-		from transformers import AutoTokenizer
-
-		model_name = _get_sentiment_service().model_name
-		try:
-			_tokenizer = AutoTokenizer.from_pretrained(
-				model_name,
-				use_fast=True,
-				local_files_only=True,
-			)
-		except Exception:
-			_tokenizer = create_fallback_tokenizer()
-	return _tokenizer
-
 def _get_max_chunk_tokens(tokenizer, max_tokens):
 	model_max = getattr(tokenizer, "model_max_length", max_tokens)
 	if model_max is None or model_max > 100000:
@@ -115,7 +98,9 @@ def _chunk_text(text, max_tokens=510):
 	if not text:
 		return []
 
-	tokenizer = _get_tokenizer()
+	provider = get_tokenizer_provider()
+	model_name = _get_sentiment_service().model_name
+	tokenizer = provider.get_tokenizer(model_name)
 	max_chunk_tokens = _get_max_chunk_tokens(tokenizer, max_tokens)
 
 	# Split by sentences and group into chunks based on token counts.
