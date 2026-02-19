@@ -8,8 +8,10 @@ class TestNewsApiService(unittest.TestCase):
     
     def setUp(self):
         # Mock the NewsApiClient to avoid needing a real API key during tests
-        with patch('news_insight_app.news_api_service.NewsApiClient'):
-            self.news_service = NewsApiService(api_key='test_api_key')
+        self.newsapi_patcher = patch('news_insight_app.news_api_service.NewsApiClient')
+        mock_client_class = self.newsapi_patcher.start()
+        self.addCleanup(self.newsapi_patcher.stop)
+        self.news_service = NewsApiService(api_key='test_api_key')
     
     @patch('news_insight_app.news_api_service.NewsApiClient')
     def test_search_news_success(self, mock_client_class):
