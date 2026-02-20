@@ -30,6 +30,26 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
+        .header-nav {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .header-nav a {
+            color: #cfd9ff;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-weight: 500;
+        }
+        .header-nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
         .articles-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
@@ -173,6 +193,9 @@
     <div class="container">
         <div class="header">
             <h1>Both Eyes Open</h1>
+            <div class="header-nav">
+                <a href="/news-search">Search the news</a>
+            </div>
         </div>
         <div id="app">
             <div id="loading" class="loading">Loading news...</div>
