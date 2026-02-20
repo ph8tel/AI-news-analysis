@@ -38,6 +38,16 @@ def test_get_news_route(client):
     assert 'sentiment' in data[0]
     assert 'insights' in data[0]
 
+def test_get_article_analysis_route(client):
+    """Test the deep analysis endpoint"""
+    response = client.get('/api/news/1/analysis')
+    assert response.status_code == 200
+    data = response.get_json()
+    assert 'article' in data
+    assert 'rhetoric' in data
+    assert 'comparison' in data
+    assert data['comparison'].get('reference') is not None
+
 def test_generate_summary():
     """Test the summary generation function"""
     from main import generate_summary
