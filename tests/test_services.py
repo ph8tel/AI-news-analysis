@@ -33,6 +33,8 @@ def test_generate_summary_ellipsis():
 
 def test_chunk_text_splits_long_text():
     text = ". ".join(["Sentence"] * 30) + "."
+    # Use a deliberately small max_tokens value to stress-test chunking behavior on many small chunks.
+    # This is an edge-case unit test and is not intended to reflect typical production token limits.
     chunks = services._chunk_text(text, max_tokens=10)
     assert len(chunks) > 1
     assert all(chunk.endswith(".") for chunk in chunks)

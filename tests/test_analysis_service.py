@@ -1,18 +1,8 @@
 import pytest
 
-from src.news_insight_app import analysis_service
+from news_insight_app import analysis_service
 from requests.exceptions import RequestException
-
-
-class _DummyResponse:
-    def __init__(self, payload):
-        self._payload = payload
-
-    def raise_for_status(self):
-        return None
-
-    def json(self):
-        return self._payload
+from conftest import DummyResponse
 
 
 def _assert_token_payload(tokens):
@@ -28,7 +18,7 @@ def test_analyze_rhetoric_includes_tokens(monkeypatch):
     def fake_post(url, json, timeout):
         recorded['tokens'] = json.get('article_tokens')
         recorded['tokenizer_model'] = json.get('tokenizer_model')
-        return _DummyResponse({
+        return DummyResponse({
             'choices': [{'text': 'Deep analysis'}],
             'usage': {'total_tokens': 42},
         })
@@ -60,7 +50,7 @@ def test_compare_article_texts_returns_comparison(monkeypatch):
     def fake_post(url, json, timeout):
         recorded['primary_tokens'] = json.get('primary_tokens')
         recorded['reference_tokens'] = json.get('reference_tokens')
-        return _DummyResponse({
+        return DummyResponse({
             'choices': [{'text': 'Comparison output'}],
             'usage': {'total_tokens': 99},
         })

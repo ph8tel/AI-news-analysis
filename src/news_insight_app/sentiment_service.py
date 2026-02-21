@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import time
 from typing import Any, Dict
 
@@ -12,6 +11,19 @@ from .tokenizer_utils import get_tokenizer_provider
 
 PHI_URL = os.getenv("PHI_ANALYSIS_URL", "http://192.168.1.108:8002/v1/completions")
 PHI_MODEL_NAME = "phi3.5:latest"
+
+
+def _extract_first_json(text: str) -> Any:
+    """Return the first valid JSON object found in text, or None."""
+    decoder = json.JSONDecoder()
+    for i, ch in enumerate(text):
+        if ch == "{":
+            try:
+                obj, _ = decoder.raw_decode(text, i)
+                return obj
+            except json.JSONDecodeError:
+                continue
+    return None
 
 
 class SentimentService:
@@ -67,12 +79,11 @@ class SentimentService:
 
         sentiment_raw = "neutral"
         raw_parsed: Any = raw_text
-        try:
-            json_match = re.search(r"\{.*\}", raw_text, re.DOTALL)
-            if json_match:
-                raw_parsed = json.loads(json_match.group())
-                sentiment_raw = str(raw_parsed.get("sentiment", "neutral")).lower()
-        except (json.JSONDecodeError, AttributeError):
+        parsed = _extract_first_json(raw_text)
+        if parsed is not None:
+            raw_parsed = parsed
+            sentiment_raw = str(parsed.get("sentiment", "neutral")).lower()
+        else:
             lower = raw_text.lower()
             if "negative" in lower:
                 sentiment_raw = "negative"

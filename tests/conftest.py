@@ -9,6 +9,19 @@ from news_insight_app import create_app
 from news_insight_app.tokenizer_utils import create_fallback_tokenizer
 
 
+class DummyResponse:
+    """Reusable fake requests.Response for HTTP-mocking in tests."""
+
+    def __init__(self, payload):
+        self._payload = payload
+
+    def raise_for_status(self):
+        return None
+
+    def json(self):
+        return self._payload
+
+
 class DummyTokenizerProvider:
     """Mock tokenizer provider for testing that tracks get_tokenizer calls."""
 
