@@ -1,4 +1,4 @@
-from .sentiment_service import SentimentService
+from .groq_service import GroqSentimentService
 from .tokenizer_utils import get_tokenizer_provider
 
 _sentiment_service = None
@@ -62,7 +62,7 @@ def generate_summary(text, max_sentences=2):
 def _get_sentiment_service():
 	global _sentiment_service
 	if _sentiment_service is None:
-		_sentiment_service = SentimentService()
+		_sentiment_service = GroqSentimentService()
 	return _sentiment_service
 
 
